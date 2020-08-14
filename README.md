@@ -13,9 +13,7 @@
 | without LSTM  | **98.0%** | 94.1% |
 
 
-**Python version**: This code is in Python3.6
-
-**Package Requirements**: torch==1.1.0, pytorch_pretrained_bert, gluonnlp, sentencepiece, konlpy, tqdm, kobert [[see how to install kobert]](https://github.com/SKTBrain/KoBERT#how-to-install) 
+**Python version**: This code is in Python3.6 
  
 **Updates**: An option for removing 조사 within an entity text (eg. 홍길동은(PER)->홍길동(PER)) is provided based on Komoran pos tagger
 
