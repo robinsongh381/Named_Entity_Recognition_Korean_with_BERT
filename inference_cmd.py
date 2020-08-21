@@ -43,8 +43,7 @@ if __name__ == '__main__':
     
     # Temp
     # args.model_path = './result/layer_3_kobert_lstm_False_crf_batch_64_epoch_20/'
-    
-    
+   
     # Distll
     kobert, vocab = get_pytorch_kobert_model()
     if '12' in args.model_path:
@@ -61,9 +60,6 @@ if __name__ == '__main__':
     else:
         use_lstm = False 
         model = KobertCRF(config=model_config, bert_model=kobert, distill=is_distill)
-    
-    # Bert Model and Vocab
-    # kobert, vocab = get_pytorch_kobert_model()
 
     # Tokenizer
     _tok_path = get_tokenizer()
@@ -71,17 +67,8 @@ if __name__ == '__main__':
     tokenizer = Tokenizer(_pretrained_tokenizer)
 
     # Load Entity Dictionary, Train and Test data
-    
     index_to_entity = torch.load('./data/processed_data/index_to_entity.pt')
-    
-#     if args.model=='bert-crf':
-#         model = KobertCRF(config=model_config, bert_model=kobert)
-#         model_save_path = '../models/bert_crf/'
-#     else:
-#         model = KobertLSTMCRF(config=model_config, bert_model=kobert)   
-#         model_save_path = '../models/bert_lstm_crf/'
-   
-    
+      
     # Load saved model
     model_dict = model.state_dict()
     model_files = glob.glob(args.model_path+'*.pt')
@@ -92,8 +79,7 @@ if __name__ == '__main__':
     model.load_state_dict(checkpoint['model_state_dict'])
     model.eval()
     model.to(device)
-    
-    
+      
     # Process input text
     while(True):
         text = input("[문장을 입력해주세요] ")
@@ -123,7 +109,6 @@ if __name__ == '__main__':
 
         sentence_with_tag = decoding_text_with_tag(tokenized_text, pred_ner_tag)
         pred_ner_dictionary = compute_found_ner(sentence_with_tag, confidence)
-
 
         print('[Text with Entity]')
         print(sentence_with_tag)
