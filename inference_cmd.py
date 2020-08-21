@@ -42,7 +42,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     # Temp
-    args.model_path = './result/layer_3_kobert_lstm_False_crf_batch_64_epoch_20/'
+    # args.model_path = './result/layer_3_kobert_lstm_False_crf_batch_64_epoch_20/'
     
     
     # Distll
