@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
-
-import logging
-
+import logging, os
 logger = logging.getLogger()
 
 
-def init_logger(log_file=None, log_file_level=logging.NOTSET):
+def init_logger(log_dir=None, log_name=None, log_file_level=logging.NOTSET):
+    
+    if not os.path.exists(log_dir):
+        os.mkdir(log_dir)
+        
+    log_file = log_dir+log_name
+    if not os.path.exists('/'.join(log_file.split('/')[:-1])):
+        os.mkdir('/'.join(log_file.split('/')[:-1]))
+        
     log_format = logging.Formatter("[%(asctime)s %(levelname)s] %(message)s")
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)

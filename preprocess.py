@@ -16,11 +16,11 @@ _pretrained_tokenizer = nlp.data.BERTSPTokenizer(_tok_path, vocab, lower=False)
 tokenizer = Tokenizer(_pretrained_tokenizer)
 
 # Entitiy-index dictionary
-global_entity_dict = torch.load('../data/processed_data/entity_to_index.pt')
+global_entity_dict = torch.load('./data/processed_data/entity_to_index.pt')
 
 # Load raw data 
-train_set = glob.glob('../data/raw_data/train_set/*.txt')
-valid_set = glob.glob('../data/raw_data/validation_set/*.txt')
+train_set = glob.glob('./data/raw_data/train_set/*.txt')
+valid_set = glob.glob('./data/raw_data/validation_set/*.txt')
 
 
 def ner_tag_to_idx(ner_list):
@@ -164,6 +164,6 @@ for m in mode:
                     
     
     # Save processed data to .pt files
-    torch.save(save_token_list, '../data/processed_data/{}_token_idx.pt'.format(m))
-    torch.save(save_ner_list, '../data/processed_data/{}_ner_idx.pt'.format(m))
-    print('{} files saved to ../data/processed_data/{}_token_idx.pt'.format(m, m))
+    torch.save(save_token_list, './data/processed_data/{}_token_idx.pt'.format(m))
+    torch.save(save_ner_list, './data/processed_data/{}_ner_idx.pt'.format(m))
+    print('{} files saved to ./data/processed_data/{}_token_idx.pt'.format(m, m))
