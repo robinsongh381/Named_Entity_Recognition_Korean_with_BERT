@@ -18,6 +18,8 @@ from utils.tokenizer import Tokenizer
 from utils.log import logger, init_logger
 from utils.ner_formatter import compute_found_ner, decoding_text_with_tag
 import utils.constant as model_config
+from transformers import DistilBertModel
+
 
 device = model_config.device
 kkma = Kkma()
@@ -35,11 +37,33 @@ def str2bool(v):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("-model", default='bert-lstm-crf', type=str, choices=['bert-crf', 'bert-lstm-crf'])
-    
+    parser.add_argument("-model_path", type=str)
+    parser.add_argument("-remove_special_char", default=True)
     args = parser.parse_args()
     
-    # Bert Model and Vocab
+    # Temp
+    args.model_path = './result/layer_3_kobert_lstm_False_crf_batch_64_epoch_20/'
+    
+    
+    # Distll
     kobert, vocab = get_pytorch_kobert_model()
+    if '12' in args.model_path:
+        is_distill=False
+        kobert = kobert
+    else:
+        is_distill=True
+        kobert = DistilBertModel.from_pretrained('monologg/distilkobert')
+        
+    # Model Architecture
+    if 'lstm_True' in args.model_path:
+        use_lstm = True
+        model = KobertLSTMCRF(config=model_config, bert_model=kobert, distill=is_distill) 
+    else:
+        use_lstm = False 
+        model = KobertCRF(config=model_config, bert_model=kobert, distill=is_distill)
+    
+    # Bert Model and Vocab
+    # kobert, vocab = get_pytorch_kobert_model()
 
     # Tokenizer
     _tok_path = get_tokenizer()
@@ -48,19 +72,19 @@ if __name__ == '__main__':
 
     # Load Entity Dictionary, Train and Test data
     
-    index_to_entity = torch.load('../data/processed_data/index_to_entity.pt')
+    index_to_entity = torch.load('./data/processed_data/index_to_entity.pt')
     
-    if args.model=='bert-crf':
-        model = KobertCRF(config=model_config, bert_model=kobert)
-        model_save_path = '../models/bert_crf/'
-    else:
-        model = KobertLSTMCRF(config=model_config, bert_model=kobert)   
-        model_save_path = '../models/bert_lstm_crf/'
+#     if args.model=='bert-crf':
+#         model = KobertCRF(config=model_config, bert_model=kobert)
+#         model_save_path = '../models/bert_crf/'
+#     else:
+#         model = KobertLSTMCRF(config=model_config, bert_model=kobert)   
+#         model_save_path = '../models/bert_lstm_crf/'
    
     
     # Load saved model
     model_dict = model.state_dict()
-    model_files = glob.glob(model_save_path+'*.pt')
+    model_files = glob.glob(args.model_path+'*.pt')
     best_acc_model = sorted(model_files, key=lambda x: x[-6:-3], reverse=True)[0]
     print('Loading checkpoint from {}'.format(best_acc_model))
     print(' ')
@@ -78,7 +102,7 @@ if __name__ == '__main__':
         print('[Original Text]')
         print(text)
         print(' ')
-        if model_config.remove_special_char:    
+        if args.remove_special_char:    
             # special_char_start_pos = [i.start() for i in pattern.finditer(text)]
             origianl_text = text
             text = re.sub('[:"\\‘’|\(\)\[\]\<\>`\']', '', text)
