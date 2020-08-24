@@ -27,14 +27,14 @@ Please note that all configurations for training model (hyper_parameters, save_p
 ```
 python preprocess.py 
 ```
-By default, all raw data is located at `../data/raw_data` and the processed data after running `preprocess.py` will be saved at `../data/processed_data` in the form of `.pt` files
+By default, all raw data is located at `./data/raw_data` and the processed data after running `preprocess.py` will be saved at `./data/processed_data` in the form of `.pt` files
 
 ## Model Training
 ```
-python train.py -model bert-lstm-crf -log ../logs/bert-lstm-crf.log
+python train.py -model bert-lstm-crf -log ./logs/bert-lstm-crf.log
 ```
 The `model` option should be either `bert-crf` or `bert-lstm-crf` depending your choice for the model.
-Logs for training and evaluation will be recorded to `../logs/bert-lstm-crf.log`
+Logs for training and evaluation will be recorded to `./logs/bert-lstm-crf.log`
 
 Please note that you can change batch_size, epochs etc from [constant.py](./utils/constant.py)
 
@@ -44,12 +44,3 @@ python inference_cmd.py -model bert-lstm-crf
 ```
 
 This will load a saved model with the highest accuracy from `../models/bert-lstm-crf`.
-
-Run `inference_cmd.py` if you want to test yout text intereactively otherwise run `inference.py` with `text` argument
-
-```
-python inference.py -model bert-lstm-crf -text "대한민국의 수도는 서울이다"
-```
-
-
-Please note that this package does include code for training/testing BertSumAbs but it WON'T work properly 
