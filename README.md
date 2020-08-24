@@ -31,7 +31,7 @@ By default, all raw data is located at `./data/raw_data` and the processed data 
 
 ## Model Training
 ```
-python train.py -model bert-lstm-crf -log ./logs/bert-lstm-crf.log
+python train.py -model_type bert-lstm-crf -log ./logs/bert-lstm-crf.log
 ```
 The `model` option should be either `bert-crf` or `bert-lstm-crf` depending your choice for the model.
 Logs for training and evaluation will be recorded to `./logs/bert-lstm-crf.log`
