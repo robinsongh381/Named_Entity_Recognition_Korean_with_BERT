@@ -33,8 +33,8 @@ By default, all raw data is located at `./data/raw_data` and the processed data 
 ```
 python train.py -model_type bert-lstm-crf -log ./logs/bert-lstm-crf.log
 ```
-The `model` option should be either `bert-crf` or `bert-lstm-crf` depending your choice for the model.
-Logs for training and evaluation will be recorded to `./logs/bert-lstm-crf.log`
+The `model_type` option should be either `bert-crf` or `bert-lstm-crf` depending your choice for the model.
+Logs for training and evaluation will be recorded at `./logs/bert-lstm-crf.log`
 
 Please note that you can change batch_size, epochs etc from [constant.py](./utils/constant.py)
 
