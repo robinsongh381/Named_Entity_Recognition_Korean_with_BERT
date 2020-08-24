@@ -19,14 +19,7 @@
 
 
 # Steps for Training Model
-
-Please move to `./src` directory otherwise erros would occur due to the relative path
-
-```
-cd ./src`
-```
-
-All configurations for training model (hyper_parameters, save_path, load_path, etc) is defined at [constant.py](./utils/constant.py)
+Please note that all configurations for training model (hyper_parameters, save_path, load_path, etc) is defined at [constant.py](./utils/constant.py)
 
 
 ## Data Process
